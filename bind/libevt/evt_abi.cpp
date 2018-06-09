@@ -11,6 +11,7 @@
 
 #include <fc/variant.hpp>
 #include <fc/io/json.hpp>
+#include<iostream>
 
 using evt::chain::contracts::abi_serializer;
 using evt::chain::contracts::abi_def;
@@ -25,6 +26,7 @@ get_evt_data<bytes>(const bytes& b) {
     auto sz = sizeof(evt_data_t) + b.size();
     auto data = (evt_data_t*)malloc(sz);
     data->sz = b.size();
+    std::cout<<data->sz<<std::endl;
     memcpy((char*)data + sizeof(evt_data_t), b.data(), b.size());
     return data;
 }
@@ -36,6 +38,9 @@ extract_data<bytes>(evt_data_t* data, bytes& val) {
         return EVT_INVALID_ARGUMENT;
     }
     val.resize(data->sz);
+
+    std::cout<<data->sz<<std::endl;
+
     memcpy(&val[0], data->buf, data->sz);
     return EVT_OK;
 }
@@ -68,6 +73,7 @@ evt_abi_json_to_bin(void* evt_abi, const char* action, const char* json, evt_bin
         return EVT_INVALID_ARGUMENT;
     }
     auto abi = abi_serializer(*(abi_def*)evt_abi);
+    std::cout<<json<<std::endl;
     auto var = fc::json::from_string(json);
     auto action_type = abi.get_action_type(action);
     if(action_type.empty()) {
@@ -108,9 +114,11 @@ evt_abi_bin_to_json(void* evt_abi, const char* action, evt_bin_t* bin, char** js
         if(extract_data(bin, b) != EVT_OK) {
             return EVT_INVALID_BINARY;
         }
+        std::cout<<b.size()<<std::endl;
         auto var = abi.binary_to_variant(action_type, b);
         auto str = fc::json::to_string(var);
         *json = strdup(str);
+        std::cout<<*json<<std::endl;
     }
     catch(...) {
         return EVT_INTERNAL_ERROR;

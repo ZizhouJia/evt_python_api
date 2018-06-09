@@ -105,15 +105,15 @@ BOOST_AUTO_TEST_CASE( evtabi ) {
 
     auto j1 = R"(
     {
-        "name": "test",
-        "issuer": "EVT8MGU4aKiVzqMtWi9zLpu8KuTHZWjQQrX475ycSxEkLd6aBpraX",
-        "issue": {
-            "name": "issue",
-            "threshold": 1,
-            "authorizers": [{
+    "name": "你好",
+    "issuer": "EVT8MGU4aKiVzqMtWi9zLpu8KuTHZWjQQrX475ycSxEkLd6aBpraX",
+    "issue": {
+    "name": "issue",
+    "threshold": 1,
+    "authorizers": [{
                 "ref": "[A] EVT8MGU4aKiVzqMtWi9zLpu8KuTHZWjQQrX475ycSxEkLd6aBpraX",
                 "weight": 1
-            }]
+    }]
         },
         "transfer": {
             "name": "transfer",
